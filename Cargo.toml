@@ -1,0 +1,13 @@
+[package]
+name = "bear-lib-terminal-sys"
+description = "Pure BearLibTerminal FFI for Rust"
+repository = "https://github.com/nabijaczleweli/BearLibTerminal-sys.rs"
+readme = "README.md"
+keywords = ["BearLibTerminal", "FFI", "TUI", "UI"]
+license = "MIT"
+version = "1.0.0"
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
+           "Cat Plus Plus <piotrlegnica@piotrl.pl>"]
+
+[dependencies]
+libc = "0.2.4"
