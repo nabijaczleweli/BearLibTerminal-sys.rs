@@ -107,37 +107,24 @@ pub const TK_MOUSE_MOVE   : i32 = 0x85;
 pub const TK_MOUSE_SCROLL : i32 = 0x86;
 pub const TK_MOUSE_X      : i32 = 0x87;
 pub const TK_MOUSE_Y      : i32 = 0x88;
-#[allow(dead_code)]
 pub const TK_MOUSE_PIXEL_X: i32 = 0x89;
-#[allow(dead_code)]
 pub const TK_MOUSE_PIXEL_Y: i32 = 0x8A;
 pub const TK_MOUSE_WHEEL  : i32 = 0x8B;
-#[allow(dead_code)]
 pub const TK_MOUSE_CLICKS : i32 = 0x8C;
 
 pub const TK_KEY_RELEASED: i32 = 0x100;
 
-#[allow(dead_code)]
 pub const TK_WIDTH      : i32 = 0xC0;
-#[allow(dead_code)]
 pub const TK_HEIGHT     : i32 = 0xC1;
-#[allow(dead_code)]
 pub const TK_CELL_WIDTH : i32 = 0xC2;
-#[allow(dead_code)]
 pub const TK_CELL_HEIGHT: i32 = 0xC3;
 pub const TK_COLOR      : i32 = 0xC4;
 pub const TK_BKCOLOR    : i32 = 0xC5;
-#[allow(dead_code)]
 pub const TK_LAYER      : i32 = 0xC6;
-#[allow(dead_code)]
 pub const TK_COMPOSITION: i32 = 0xC7;
-#[allow(dead_code)]
 pub const TK_CHAR       : i32 = 0xC8;
-#[allow(dead_code)]
 pub const TK_WCHAR      : i32 = 0xC9;
-#[allow(dead_code)]
 pub const TK_EVENT      : i32 = 0xCA;
-#[allow(dead_code)]
 pub const TK_FULLSCREEN : i32 = 0xCB;
 
 pub const TK_CLOSE  : i32 = 0xE0;
@@ -146,9 +133,7 @@ pub const TK_RESIZED: i32 = 0xE1;
 pub const TK_OFF: i32 = 0;
 pub const TK_ON : i32 = 1;
 
-#[allow(dead_code)]
 pub const TK_INPUT_NONE     : i32 = 0;
-#[allow(dead_code)]
 pub const TK_INPUT_CANCELLED: i32 = -1;
 
 
@@ -251,7 +236,7 @@ pub fn put_ext(x: i32, y: i32, dx: i32, dy: i32, code: i32, corners: &[ColorT]) 
 	assert!(x >= 0);
 	assert!(y >= 0);
 	assert!(code >= 0);
-	assert!(corners.len() == 4);
+	assert_eq!(corners.len(), 4);
 
 	let corners_ptr = corners.as_ptr();
 	unsafe {
@@ -344,6 +329,21 @@ pub fn peek() -> i32 {
 	}
 }
 
+pub fn read_str(x: i32, y: i32, max: i32) -> Option<String> {
+	assert!(x >= 0);
+	assert!(y >= 0);
+	assert!(max >= 0);
+
+	match unsafe {
+		let i8_ptr = mem::transmute::<*mut libc::c_char, *mut i8>(CString::from_vec_unchecked(vec![0; max as usize]).into_raw());
+		(terminal_read_str8(x, y, i8_ptr, max) as i32, CString::from_raw(i8_ptr))
+	} {
+		(TK_INPUT_CANCELLED, _) => None,
+		(TK_INPUT_NONE,      _) => Some(String::with_capacity(0)),  // Utilize zero-alloc here
+		(_,             string) => Some(string.to_str().unwrap().to_string()),
+	}
+}
+
 pub fn delay(period: i32) {
 	unsafe {
 		terminal_delay(period)
@@ -375,6 +375,7 @@ extern {
 	fn terminal_state(code: i32) -> i32;
 	fn terminal_read() -> i32;
 	fn terminal_peek() -> i32;
+	fn terminal_read_str8(x: i32, y: i32, buffer: *mut i8, max: i32) -> ColorT;
 	fn terminal_delay(period: i32);
 }
 
