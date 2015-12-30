@@ -5,7 +5,7 @@ repository = "https://github.com/nabijaczleweli/BearLibTerminal-sys.rs"
 readme = "README.md"
 keywords = ["BearLibTerminal", "FFI", "TUI", "UI"]
 license = "MIT"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
            "Cat Plus Plus <piotrlegnica@piotrl.pl>"]
 
