@@ -136,6 +136,13 @@ pub const TK_ON : i32 = 1;
 pub const TK_INPUT_NONE     : i32 = 0;
 pub const TK_INPUT_CANCELLED: i32 = -1;
 
+pub const TK_ALIGN_DEFAULT: i32 = 0;
+pub const TK_ALIGN_LEFT   : i32 = 1;
+pub const TK_ALIGN_RIGHT  : i32 = 2;
+pub const TK_ALIGN_CENTER : i32 = 3;
+pub const TK_ALIGN_TOP    : i32 = 4;
+pub const TK_ALIGN_BOTTOM : i32 = 5;
+pub const TK_ALIGN_MIDDLE : i32 = 6;
 
 pub type ColorT = u32;
 
@@ -273,15 +280,17 @@ pub fn pick_bkcolor(x: i32, y: i32) -> ColorT {
 	}
 }
 
-pub fn print(x: i32, y: i32, value: &str) -> i32 {
+pub fn print(x: i32, y: i32, value: &str) {
 	assert!(x >= 0);
 	assert!(y >= 0);
 
 	with_utf8_ptr(value, |ptr| {
 		unsafe {
-			terminal_print8(x, y, ptr)
+			let mut out_w = 0;
+			let mut out_h = 0;
+			terminal_print_ext8(x, y, 0, 0, TK_ALIGN_DEFAULT, ptr, &mut out_w, &mut out_h);
 		}
-	})
+	});
 }
 
 pub fn measure(value: &str) -> i32 {
@@ -369,7 +378,7 @@ extern {
 	fn terminal_pick(x: i32, y: i32, index: i32) -> i32;
 	fn terminal_pick_color(x: i32, y: i32, index: i32) -> ColorT;
 	fn terminal_pick_bkcolor(x: i32, y: i32) -> ColorT;
-	fn terminal_print8(x: i32, y: i32, value: *const i8) -> i32;
+	fn terminal_print_ext8(x: i32, y: i32, w: i32, h: i32, align: i32, value: *const i8, out_w: *mut i32, out_h: *mut i32);
 	fn terminal_measure8(value: *const i8) -> i32;
 	fn terminal_has_input() -> i32;
 	fn terminal_state(code: i32) -> i32;
