@@ -288,7 +288,7 @@ pub fn print(x: i32, y: i32, value: &str) {
 		unsafe {
 			let mut out_w = 0;
 			let mut out_h = 0;
-			terminal_print_ext8(x, y, 0, 0, TK_ALIGN_DEFAULT, ptr, &mut out_w, &mut out_h)
+			terminal_print_ext8(x, y, 0, 0, TK_ALIGN_DEFAULT, ptr, &mut out_w, &mut out_h);
 		}
 	})
 }
