@@ -136,6 +136,13 @@ pub const TK_ON : i32 = 1;
 pub const TK_INPUT_NONE     : i32 = 0;
 pub const TK_INPUT_CANCELLED: i32 = -1;
 
+pub const TK_ALIGN_DEFAULT: i32 = 0;
+pub const TK_ALIGN_LEFT   : i32 = 1;
+pub const TK_ALIGN_RIGHT  : i32 = 2;
+pub const TK_ALIGN_CENTER : i32 = 3;
+pub const TK_ALIGN_TOP    : i32 = 4;
+pub const TK_ALIGN_BOTTOM : i32 = 5;
+pub const TK_ALIGN_MIDDLE : i32 = 6;
 
 pub type ColorT = u32;
 
