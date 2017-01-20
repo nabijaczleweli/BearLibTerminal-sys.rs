@@ -6,7 +6,7 @@ readme = "README.md"
 keywords = ["BearLibTerminal", "FFI", "TUI", "UI"]
 categories = ["external-ffi-bindings", "gui", "multimedia"]
 license = "MIT"
-version = "1.2.0"
+version = "1.2.1"
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>",
            "Cat Plus Plus <piotrlegnica@piotrl.pl>"]
 
