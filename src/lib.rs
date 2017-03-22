@@ -296,7 +296,7 @@ pub fn print(x: i32, y: i32, value: &str) {
 pub fn measure(value: &str) -> i32 {
 	with_utf8_ptr(value, |ptr|
 		unsafe {
-			terminal_measure8(ptr)
+			terminal_measure_ext8(ptr)
 		}
 	)
 }
@@ -379,7 +379,7 @@ extern {
 	fn terminal_pick_color(x: i32, y: i32, index: i32) -> ColorT;
 	fn terminal_pick_bkcolor(x: i32, y: i32) -> ColorT;
 	fn terminal_print_ext8(x: i32, y: i32, w: i32, h: i32, align: i32, value: *const i8, out_w: *mut i32, out_h: *mut i32);
-	fn terminal_measure8(value: *const i8) -> i32;
+	fn terminal_measure_ext8(value: *const i8) -> i32;
 	fn terminal_has_input() -> i32;
 	fn terminal_state(code: i32) -> i32;
 	fn terminal_read() -> i32;
