@@ -97,6 +97,7 @@ pub const TK_KP_0       : i32 = 0x62;
 pub const TK_KP_PERIOD  : i32 = 0x63;
 pub const TK_SHIFT      : i32 = 0x70;
 pub const TK_CONTROL    : i32 = 0x71;
+pub const TK_ALT        : i32 = 0x72;
 
 pub const TK_MOUSE_LEFT   : i32 = 0x80;
 pub const TK_MOUSE_RIGHT  : i32 = 0x81;
